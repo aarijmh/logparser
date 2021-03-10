@@ -18,9 +18,12 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+
+import com.google.gson.Gson;
 
 public class LogParser {
 
@@ -42,18 +45,18 @@ public class LogParser {
 		}
 	};
 
-	static String DESTINATION_PATH = "E:\\logs\\uncompressed\\aa.txt";
+	static String DESTINATION_PATH = "E:\\lpgs\\uncompressed\\aa.txt";
 	static File destFile = new File(DESTINATION_PATH);
 	static OutputStreamWriter writer;
 	static BufferedWriter bufWriter;
 
 	public static void main(String[] args) throws IOException {
-		writer = new OutputStreamWriter(new FileOutputStream("C:\\Temp\\log\\output.txt"), "UTF-8");
+		writer = new OutputStreamWriter(new FileOutputStream("e:\\logs\\output.txt"), "UTF-8");
 
 		bufWriter = new BufferedWriter(writer);
 
 		FileSystem fileSystem = FileSystems.getDefault();
-		Path rootPath = fileSystem.getPath("E:\\logs\\December 2020");
+		Path rootPath = fileSystem.getPath("E:\\lgs\\");
 		try {
 			Files.walkFileTree(rootPath, simpleFileVisitor);
 		} catch (IOException ioe) {
@@ -71,6 +74,8 @@ public class LogParser {
 	private static void parseFile(File file) throws IOException {
 		int state = 0;
 		StringBuffer buffer = new StringBuffer();
+		Gson gson = new Gson();
+		//List<LogEntry> entryList = gson.read
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String st;
